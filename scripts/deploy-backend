@@ -1,0 +1,51 @@
+#!/usr/bin/env bash -e
+
+while true; do
+    read -p "Do you want to deploy the backend code? (y/n) " yn
+    case $yn in
+        [Yy]* ) break;;
+        [Nn]* ) exit;;
+        * ) echo "Please answer yes or no.";;
+    esac
+done
+
+BACKEND_DIR=`cd $(dirname $0)/../backend;pwd`
+cd $BACKEND_DIR
+
+echo ""
+echo "##############################################"
+echo "# Installing just the production dependencies "
+echo "##############################################"
+
+npm install --production
+npm prune --production
+
+
+echo ""
+echo "##############################################"
+echo "# Deploying files"
+echo "##############################################"
+
+rsync -rvz $BACKEND_DIR/* hotspotting:/opt/hotspotting/backend \
+--rsync-path="sudo rsync" \
+--exclude .git \
+--exclude uploads \
+--exclude _doc \
+--exclude _doc_template
+
+
+echo ""
+echo "##############################################"
+echo "# Restarting nodejs server"
+echo "##############################################"
+
+ssh hotspotting "sudo service hotspotting-api restart"
+
+
+echo ""
+echo "##############################################"
+echo "# Installing all deps again"
+echo "##############################################"
+
+# install the dev dependencies
+npm install

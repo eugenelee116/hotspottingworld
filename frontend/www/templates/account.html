@@ -1,0 +1,67 @@
+<ion-view view-title='Account' ng-controller="HeaderCtrl">
+    <ion-nav-title>
+      <img id="logo-white" src="img/LOGOmenu.svg">
+      <span id="logo-text">Account</span>
+    </ion-nav-title>
+    <div id="favHeader"></div>
+    <ion-nav-buttons side="right" ng-class="navSearch">
+        <div class="search-celebrity-wrapper">
+            <input type="text" class="searchCelebrity" placeholder="FIND YOUR FAVORITE CELEBRITY" ng-model="searchTerm" ng-change="onChange(searchTerm)"/>
+            <img id="btnSearch" src="img/mobile/search.png" ng-click="toggleSearch()"/>
+        </div>
+    </ion-nav-buttons>
+    <div class="bar bar-subheader">
+      <input id="txtSearch" type="text" placeholder="FIND YOUR FAVORITE CELEBRITY" ng-model="searchTerm" ng-change="onChange(searchTerm)" ng-if="platform == 'webview'"/>
+      <div id="searchResults">
+        <div class="search-results" ng-repeat="result in results" ng-click="goToCelebrity(result)">
+          <img ng-src="{{result.thumbnail_url}}"/>
+          <div class="linear-gradient-mask"></div>
+
+          <div class="search-results-details">
+            <span class="search-results-details-name ng-binding">{{result.celebrity}}</span>
+            <div class="search-results-details-followers-wrapper">
+              <div class="search-results-details-followers">
+                <img src="img/mobile/followers.png">
+                <span class="ng-binding">{{result.followers}} Followers</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="account-header">
+
+    </div>
+
+  <ion-content overflow-scroll="true" class="noHeader" infinite-scroll="loadMore()" can-load="hasMoreItems" is-busy="busy" threshold="0">
+  	<div class="account-container">
+      <div class="account-body" >
+
+        <div class="account-body-wrapper">
+          <div class="account-img">
+            <img id="img-picture" ng-src="{{user.picture}}" alt="User Name" title="">
+            <div class="picture-edit ion-edit" ng-click="triggerLoadPicture()"></div>
+             <input id="input-picture" type="file" accept="image/*" file-model="accountInfo.picture"/>
+          </div>
+          <div class="account-details">
+              <label class="item item-input item-stacked-label">
+                <span class="input-label">My Name</span>
+                <input  type="text" name="fullname" ng-model="accountInfo.fullname">
+              </label>
+              <label class="item item-input item-stacked-label">
+                <span class="input-label">My Email</span>
+                <input type="text" ng-model="accountInfo.email">
+              </label>
+              <div class="account-btns">
+                <button class="button icon-left button-small button-positive btn-save" type="submit" ng-click="UpdateAccount()">SAVE</button>
+                <button class="button icon-left button-small button-positive btn-cancel" type="submit" ng-click="returnToFeed()">CANCEL</button>
+              </div>
+          </div>
+        </div>
+
+		  </div>
+	</div>
+  </ion-content>
+</ion-view>

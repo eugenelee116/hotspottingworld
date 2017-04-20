@@ -1,0 +1,35 @@
+<ion-modal-view>
+  <ion-header-bar style="border: none;">
+    <h1 class="title"></h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="closeSignup()">X</button>
+    </div>
+  </ion-header-bar>
+  <ion-content class="modalContent" >
+
+      <div style="width:100%; height:100%;display:table;vertical-align:middle;">
+        <div style="display:table-cell;vertical-align:middle;text-align:center;">
+          <label class="item item-input">
+            <input type="text" name="email" placeholder="email" ng-model="signupData.email">
+          </label>
+          <label class="item item-input">
+            <input type="text" name="username" placeholder="username" ng-model="signupData.username">
+          </label>
+          <label class="item item-input">
+            <input type="password" name="password" placeholder="password" ng-model="signupData.password">
+          </label>
+          <label class="item item-input">
+            <input type="password" name="confirm" placeholder="confirm password" ng-model="signupData.confirm">
+          </label>
+
+          <div class="modal-buttons" ng-switch="" on="platform">
+            <div class="signup-hint">Already a member? <span ng-click="switchToLogin()">Login</span></div>
+            <button ng-switch-when="browser" class="button icon-left button-small button-positive signup" type="submit" ng-click="submitSignup()">Signup</button>
+            <button ng-switch-when="webview" class="button icon-left button-block button-positive signup" type="submit" ng-click="submitSignup()">Login Using Email</button>
+          </div>
+
+        </div>
+      </div>
+
+  </ion-content>
+</ion-modal-view>

@@ -1,0 +1,38 @@
+<ion-modal-view class="modal-content">
+  <ion-header-bar style="border: none;">
+    <h1 class="title"></h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="closeProducts()">
+        <img class="close-modal-btn" src="img/CLOSE_POPUP.svg"/>
+      </button>
+    </div>
+  </ion-header-bar>
+  <ion-content ng-controller="ProductsCtrl" class="modalProductsContent" >
+      <div class="modalProductsWrapper">
+
+          <div class="product-image-wrapper">
+            <span class="helper"></span>
+            <img ng-src="{{mainProduct.image}}" />
+          </div>
+          <div class="product-details-wrapper">
+            <div class="product-details-box">
+              <div class="product-details" style="background: {{mainProduct.color}}">
+                <div class="product-details-span-wrapper">
+                  <span class="brand">{{mainProduct.brand}}</span>
+                  <span class="price">${{mainProduct.price}}</span>
+                </div>
+              </div>
+              <div class="product-likes"></div>
+              <div class="product-buy" ng-click="goToBuy(mainProduct.url)">Buy</div>
+            </div>
+          </div>
+          <div class="product-similar-wrapper">
+            <div class="product-similar-items">Similar Items</div>
+            <div class="product-similar" ng-repeat="product in products track by product.id_product" >
+              <img ng-src="{{product.image}}" ng-click="swapProduct(product)"/>
+            </div>
+            <br class="clear" />;
+          </div>
+      </div>
+  </ion-content>
+</ion-modal-view>

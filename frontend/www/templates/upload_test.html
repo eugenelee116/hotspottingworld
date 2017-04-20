@@ -1,0 +1,81 @@
+<ion-view view-title='HotSpotting' ng-controller="HeaderCtrl">
+    <ion-nav-title>
+      <img id="logo-white" src="img/LOGOmenu.svg">
+      <img id="logo-mobile" src="img/mobile/logo.png">
+    </ion-nav-title>
+    <div id="folHeader"></div>
+    <ion-nav-buttons side="right" ng-class="navSearch">
+        <div class="search-celebrity-wrapper">
+            <input type="text" class="searchCelebrity" placeholder="FIND YOUR FAVORITE CELEBRITY" ng-model="searchTerm" ng-change="onChange(searchTerm)"/>
+            <img id="btnSearch" src="img/mobile/search.png" ng-click="toggleSearch()"/>
+        </div>
+    </ion-nav-buttons>
+    <div class="bar bar-subheader">
+      <input id="txtSearch" type="text" placeholder="FIND YOUR FAVORITE CELEBRITY" ng-model="searchTerm" ng-change="onChange(searchTerm)" ng-if="platform == 'webview'"/>
+      <div id="searchResults">
+        <div class="search-results" ng-repeat="result in results" ng-click="goToCelebrity(result)">
+          <img ng-src="{{result.thumbnail_url}}"/>
+          <div class="linear-gradient-mask"></div>
+
+          <div class="search-results-details">
+            <span class="search-results-details-name ng-binding">{{result.celebrity}}</span>
+            <div class="search-results-details-followers-wrapper">
+              <div class="search-results-details-followers">
+                <img src="img/mobile/followers.png">
+                <span class="ng-binding">{{result.following}} Followers</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <ion-content overflow-scroll="true" class="noHeader">
+      <div class="upload-container">
+
+        <div class="upload-form-wrapper">
+
+          <div class="step">
+            <label class="item item-input">
+              <input type="text" name="celebrity" placeholder="Celebrity" ng-model="uploadData.celebrity" ng-click="getCelebrities()" ng-change="searchTerm()" ng-blur="onBlur()">
+            </label>
+            <div class="autocomplete">
+              <div ng-repeat="name in names">
+                  <div ng-click="selectCelebrity('{{name}}')">{{name}}</div>
+              </div>
+            </div>
+          </div>
+          <div class="step">
+            <h2 class="step__title">1. Choose an image</h2>
+            <div class="step__description">
+            <p>Can&rsquo;t do much without an image for reference, right?</p>
+            </div>
+            <label class="upload">
+            <input type="file" id="input-file" accept="image/*"/>
+            </label>
+          </div>
+            <div class="step">
+            <h2 class="step__title">2. Tag your stuff</h2>
+            <div class="step__description">
+            <p>CLICK ALL THE THINGS!</p>
+            </div>
+            <div id="preview"></div>
+            </div>
+            <div class="step">
+            <h2 class="step__title">3. Copy the code</h2>
+            <div class="step__description">
+            <p>Pro-tip: CTRL+C</p>
+            </div>
+            <pre id="output"></pre>
+            <label>
+            <input type="checkbox" id="output-opt-minify" checked />
+            Minify?
+            </label>
+          </div>
+
+        </div>
+
+      </div>
+    </ion-content>
+</ion-view>

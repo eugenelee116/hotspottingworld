@@ -1,0 +1,29 @@
+#!/usr/bin/env bash -e
+
+while true; do
+    read -p "Do you want to deploy the api doc? (y/n) " yn
+    case $yn in
+        [Yy]* ) break;;
+        [Nn]* ) exit;;
+        * ) echo "Please answer yes or no.";;
+    esac
+done
+
+BACKEND_DIR=`cd $(dirname $0)/../backend;pwd`
+cd $BACKEND_DIR
+
+echo ""
+echo "##############################################"
+echo "# Building"
+echo "##############################################"
+
+npm run apidoc
+
+
+echo ""
+echo "##############################################"
+echo "# Deploying files"
+echo "##############################################"
+
+rsync -rvz $BACKEND_DIR/_doc/* hotspotting:/opt/hotspotting/frontend/_apidoc/ \
+--rsync-path="sudo rsync"

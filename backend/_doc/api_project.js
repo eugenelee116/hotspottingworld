@@ -1,0 +1,1 @@
+define({  "title": "Hotspotting API Documentation",  "url": "hotspotting.com/api",  "name": "hotspotting-api",  "version": "1.0.0",  "description": "Hotspotting Webservice API",  "sampleUrl": false,  "apidoc": "0.2.0",  "generator": {    "name": "apidoc",    "time": "2016-01-29T16:06:16.001Z",    "url": "http://apidocjs.com",    "version": "0.14.0"  }});

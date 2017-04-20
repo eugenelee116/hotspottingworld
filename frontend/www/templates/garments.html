@@ -1,0 +1,74 @@
+<ion-view view-title='Browse' ng-controller="HeaderCtrl">
+    <ion-nav-title>
+      <img id="logo-white" src="img/LOGOmenu.svg" ng-click="goToFeed()">
+      <span id="logo-text">Browse</span>
+    </ion-nav-title>
+    <div id="favHeader"></div>
+    <ion-nav-buttons side="right" ng-class="navSearch">
+        <div class="search-celebrity-wrapper">
+            <input type="text" class="searchCelebrity" placeholder="FIND YOUR FAVORITE CELEBRITY" ng-model="searchTerm" ng-change="onChange(searchTerm)"/>
+            <img id="btnSearch" src="img/mobile/search.png" ng-click="toggleSearch()"/>
+        </div>
+    </ion-nav-buttons>
+    <div class="bar bar-subheader">
+      <input id="txtSearch" type="text" placeholder="FIND YOUR FAVORITE CELEBRITY" ng-model="searchTerm" ng-change="onChange(searchTerm)" ng-if="platform == 'webview'"/>
+      <div id="searchResults">
+        <div class="search-results" ng-repeat="result in results" ng-click="goToCelebrity(result)">
+          <img ng-src="{{result.thumbnail_url}}"/>
+          <div class="linear-gradient-mask"></div>
+
+          <div class="search-results-details">
+            <span class="search-results-details-name ng-binding">{{result.celebrity}}</span>
+            <div class="search-results-details-followers-wrapper">
+              <div class="search-results-details-followers">
+                <img src="img/mobile/followers.png">
+                <span class="ng-binding">{{result.followers}} Followers</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="favourites-header">
+
+    </div>
+
+  <ion-content overflow-scroll="true" class="noHeader" infinite-scroll="loadMore()" can-load="hasMoreItems" is-busy="busy" threshold="0">
+  	<div class="main-container">
+      	<div class="favourites-body" ><!-- ng-switch="" on="param.gender" -->
+
+    			<!--div class="grid">
+            <div class="grid-sizer"></div>
+            <div ng-repeat="item in items track by item.id_garment">
+              <div class="grid-item" ng-click="goToBrowse('{{item.garment}}')">
+                <img ng-src="{{item.image_url}}" />
+                <div class="linear-gradient-mask">
+                  <div class="category-name">{{item.garment}}</div>
+              </div>
+              </div>
+            </div>
+          </div-->
+            <div class="toggle-gender">
+                <div><span ng-class="{active: param.gender=='woman'}" ng-click="toggleGender('woman')">Woman</span></div>
+                <div><span  ng-class="{active: param.gender=='man'}" id="toggle-man" ng-click="toggleGender('man')">Man</span></div>
+            </div>
+          <div class="grid" class="pad-sides" masonry="{columnWidth: '.grid-sizer', transitionDuration: '0'}" item-selector=".grid-item"  preserve-order> <!-- ng-switch-when="woman"  -->
+            <div class="grid-sizer"></div>
+            <div class="masonry-brick" ng-repeat="item in items track by item.id_garment">
+              <div class="grid-item" ng-click="goToBrowse('{{item.garment}}')">
+                <img ng-src="{{item.image_url}}" />
+                <div class="linear-gradient-mask">
+                  <div class="category-name">{{item.garment}}</div>
+              </div>
+              </div>
+            </div>
+          </div>
+
+
+
+		</div>
+	</div>
+  </ion-content>
+</ion-view>

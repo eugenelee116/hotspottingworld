@@ -1,0 +1,39 @@
+<ion-view view-title='HotSpotting' style="background-color: #000;" ng-controller="HeaderCtrl">
+    <ion-nav-title>
+      <img id="logo-white" src="img/LOGOmenu.svg" ng-click="goToFeed()">
+      <span id="logo-text">Browse</span>
+    </ion-nav-title>
+    <div id="favHeader"></div>
+   <ion-nav-buttons side="right" ng-class="navSearch">
+        <div class="search-celebrity-wrapper">
+            <input type="text" class="searchCelebrity" placeholder="FIND YOUR FAVORITE CELEBRITY" ng-model="searchTerm" ng-change="onChange(searchTerm)"/>
+            <img id="btnSearch" src="img/mobile/search.png" ng-click="toggleSearch()"/>
+        </div>
+    </ion-nav-buttons>
+    <div class="bar bar-subheader">
+      <input id="txtSearch" type="text" placeholder="FIND YOUR FAVORITE CELEBRITY" ng-model="searchTerm" ng-change="onChange(searchTerm)" ng-if="platform == 'webview'"/>
+      <div id="searchResults">
+        <div class="search-results" ng-repeat="result in results" ng-click="goToCelebrity(result)">
+          <img ng-src="{{result.thumbnail_url}}"/>
+          <div class="linear-gradient-mask"></div>
+
+          <div class="search-results-details">
+            <span class="search-results-details-name ng-binding">{{result.celebrity}}</span>
+            <div class="search-results-details-followers-wrapper">
+              <div class="search-results-details-followers">
+                <img src="img/mobile/followers.png">
+                <span class="ng-binding">{{result.followers}} Followers</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  <ion-content overflow-scroll="false" class="noHeader" infinite-scroll="loadMore()" can-load="hasMoreItems" is-busy="busy" threshold="0">
+  	<div class="main-container" style="height:100%;">
+      <iframe id="buy-frame" ng-src="{{trustSrc(url.src)}}" frameborder="0" width="100%" height="100%" style="margin-top: 10vh;"></iframe>
+		</div>
+  </ion-content>
+</ion-view>

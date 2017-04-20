@@ -1,0 +1,33 @@
+#!/usr/bin/env bash -e
+
+while true; do
+    read -p "Do you want to deploy the frontend code? (y/n) " yn
+    case $yn in
+        [Yy]* ) break;;
+        [Nn]* ) exit;;
+        * ) echo "Please answer yes or no.";;
+    esac
+done
+
+FRONTEND_DIR=`cd $(dirname $0)/../frontend;pwd`
+cd $FRONTEND_DIR
+
+echo ""
+echo "##############################################"
+echo "# Building"
+echo "##############################################"
+
+gulp
+
+
+echo ""
+echo "##############################################"
+echo "# Deploying files"
+echo "##############################################"
+
+rsync -rvz $FRONTEND_DIR/www/* hotspotting:/opt/hotspotting/frontend \
+--rsync-path="sudo rsync" \
+--exclude uploads \
+--exclude pictures \
+--exclude uploads \
+--exclude _apidoc

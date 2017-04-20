@@ -1,0 +1,55 @@
+<ion-view view-title='Browse' ng-controller="HeaderCtrl">
+    <ion-nav-title>
+      <img id="logo-white" src="img/LOGOmenu.svg" ng-click="goToFeed()">
+      <span id="logo-text">Browse</span>
+    </ion-nav-title>
+    <div id="favHeader"></div>
+    <ion-nav-buttons side="right" ng-class="navSearch">
+        <div class="search-celebrity-wrapper">
+            <input type="text" class="searchCelebrity" placeholder="FIND YOUR FAVORITE CELEBRITY" ng-model="searchTerm" ng-change="onChange(searchTerm)"/>
+            <img id="btnSearch" src="img/mobile/search.png" ng-click="toggleSearch()"/>
+        </div>
+    </ion-nav-buttons>
+    <div class="bar bar-subheader">
+      <input id="txtSearch" type="text" placeholder="FIND YOUR FAVORITE CELEBRITY" ng-model="searchTerm" ng-change="onChange(searchTerm)" ng-if="platform == 'webview'"/>
+      <div id="searchResults">
+        <div class="search-results" ng-repeat="result in results" ng-click="goToCelebrity(result)">
+          <img ng-src="{{result.thumbnail_url}}"/>
+          <div class="linear-gradient-mask"></div>
+
+          <div class="search-results-details">
+            <span class="search-results-details-name ng-binding">{{result.celebrity}}</span>
+            <div class="search-results-details-followers-wrapper">
+              <div class="search-results-details-followers">
+                <img src="img/mobile/followers.png">
+                <span class="ng-binding">{{result.followers}} Followers</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="gender-header">
+
+    </div>
+
+  <ion-content overflow-scroll="true" class="noHeader browse" style="overflow-y: hidden;">
+  	<div class="gender-body" >
+
+		<div class="gender woman" ng-click="goToGarments('woman')">
+      <div class="woman-image animation"></div>
+			<div ng-class="platform == 'webview' ? 'linear-gradient-mask' : ''"></div>
+			<span>WOMAN</span>
+		</div>
+
+		<div class="gender man" ng-click="goToGarments('man')">
+      <div class="man-image animation"></div>
+			<div ng-class="platform == 'webview' ? 'linear-gradient-mask' : ''"></div>
+			<span>MAN</span>
+		</div>
+
+	</div>
+  </ion-content>
+</ion-view>

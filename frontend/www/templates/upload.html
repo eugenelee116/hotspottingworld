@@ -1,0 +1,85 @@
+<ion-modal-view class="upload">
+  <ion-header-bar style="border: none;">
+    <h1 class="title"></h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="closeUpload()">X</button>
+    </div>
+  </ion-header-bar>
+  <ion-content ng-controller="UploadCtrl" class="modalContent" >
+
+    <div class="modal-upload-form-wrapper">
+      <div class="modal-upload-form">
+
+        <div class="upload-outfit">
+          <input type="file" id="input-image" accept="image/*" file-model="uploadData.photo"/>
+          <div class="upload-outfit-image-wrapper">
+
+            <div id="preview">
+              <img ng-if="editItem" edit-tags id="preview-image" class="outfit-image taggd" ng-src="{{ ::editItem.image_url }}" alt="{{::editItem.celebrity}}" tags="{{::editItem.tags}}" />
+            </div>
+            <!--img class="image-btn" src="img/UPLOAD.svg" ng-click="triggerLoadImage()"/-->
+            <span class="image-btn ion-ios-camera" ng-click="triggerLoadImage()"></span>
+
+          </div>
+          <div class="upload-outfit-details-wrapper even">
+            <div class="upload-outfit-details-thumb-wrapper even">
+              <input type="file" id="input-thumb" accept="image/*" file-model="uploadData.thumb"/>
+              <div class="upload-outfit-details-thumb-frame">
+
+                <div id="thumb-preview">
+                  <img id="preview-thumb" class="upload-outfit-details-thumb" ng-src="{{ ::editItem.thumbnail_url }}">
+                </div>
+                <!--img class="thumb-btn" src="img/UPLOAD.svg" ng-click="triggerLoadThumb()"/-->
+                <span class="thumb-btn ion-ios-camera" ng-click="triggerLoadThumb()"></span>
+
+              </div>
+              <img class="upload-outfit-details-thumb-shadow" src="img/postusershadow2.png">
+            </div>
+            <div class="outfit-details-info-wrapper">
+
+              <label class="item item-input upload">
+                <input type="text" name="celebrity" placeholder="Celebrity Name" ng-model="uploadData.celebrity" ng-click="getCelebrities()" ng-change="searchTerm()" ng-blur="onBlur()" autocomplete="off" class="celebrity-name">
+              </label>
+              <div class="autocomplete">
+                  <div ng-repeat="result in results" class="name">
+                    <div ng-click="selectCelebrity({{result}})">{{result.celebrity}}</div>
+                  </div>
+                </div>
+
+              <label class="item item-input upload date">
+                <img class="upload-outfit-details-info-clock" src="img/time.png">
+                <input class="upload-date" type="text" name="date" ng-model="uploadData.date"/>
+                  <button class="button icon-left button-small button-positive btn-edit" type="submit" ng-click="editDate()">EDIT PUBLISH DATE</button>
+              </label>
+
+              <label class="item item-input upload">
+                <input type="text" name="description" placeholder="Description" ng-model="uploadData.description" class="outfit-details-info-description">
+              </label>
+
+            </div>
+            <div class="upload-outfit-details-info-actions">
+              <button ng-if="!editItem" class="button icon-left button-small button-positive btn-save" type="submit" ng-click="SubmitUpload()">SAVE</button>
+              <button ng-if="editItem" class="button icon-left button-small button-positive btn-save" type="submit" ng-click="UpdateOutfit()">SAVE</button>
+              <button class="button icon-left button-small button-positive btn-cancel" type="submit" ng-click="closeUpload()">CANCEL</button>
+            </div>
+
+            <input type="text" id="output" name="tags" ng-model="uploadData.tags"/>
+            <select id="garmentList" class="garment-select" ng-model="selected">
+              <!-- ng-options="item as garment.garment for garment in garments track by garment.id_garment" -->
+              <option value="" disabled selected>Select one</option>
+              <optgroup label="Woman">
+                <option ng-repeat="wGarment in womanGarments track by wGarment.id_garment" value="{{wGarment.id_garment}}">{{wGarment.garment}}</option>
+              </optgroup>
+              <optgroup label="Man">
+                <option ng-repeat="mGarment in manGarments track by mGarment.id_garment" value="{{mGarment.id_garment}}">{{mGarment.garment}}</option>
+              </optgroup>
+            </select>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </ion-content>
+</ion-modal-view>

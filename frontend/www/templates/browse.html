@@ -1,0 +1,146 @@
+<ion-view view-title='HotSpotting' style="background-color: #000;" ng-controller="HeaderCtrl">
+    <ion-nav-title>
+      <img id="logo-white" src="img/LOGOmenu.svg" ng-click="goToFeed()">
+      <span id="logo-text">Celebrity Profile</span>
+    </ion-nav-title>
+    <div class="opaqueHeader"></div>
+    <ion-nav-buttons side="right" ng-class="navSearch">
+        <div class="search-celebrity-wrapper">
+            <input type="text" class="searchCelebrity" placeholder="FIND YOUR FAVORITE CELEBRITY" ng-model="searchTerm" ng-change="onChange(searchTerm)"/>
+            <img id="btnSearch" src="img/mobile/search.png" ng-click="toggleSearch()"/>
+        </div>
+    </ion-nav-buttons>
+    <div class="bar bar-subheader">
+      <input id="txtSearch" type="text" placeholder="FIND YOUR FAVORITE CELEBRITY" ng-model="searchTerm" ng-change="onChange(searchTerm)" ng-if="platform == 'webview'"/>
+      <div id="searchResults">
+        <div class="search-results" ng-repeat="result in results" ng-click="goToCelebrity(result)">
+          <img ng-src="{{result.thumbnail_url}}"/>
+          <div class="linear-gradient-mask"></div>
+
+          <div class="search-results-details">
+            <span class="search-results-details-name ng-binding">{{result.celebrity}}</span>
+            <div class="search-results-details-followers-wrapper">
+              <div class="search-results-details-followers">
+                <img src="img/mobile/followers.png">
+                <span class="ng-binding">{{result.followers}} Followers</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  <ion-content overflow-scroll="true" class="noHeader" infinite-scroll="loadMore()" can-load="hasMoreItems" is-busy="busy" threshold="0" menu-open="menuOpen()" menu-close="menuClose()">
+  	<div class="main-container">
+      	<div class="browse-body" >
+	  		<div class="feed" ng-repeat="item in items track by item.id_outfit" >
+
+	  			<div ng-if="platform == 'browser' && $even" class="outfit">
+
+	              <div class="outfit-image-wrapper"><!-- flip -->
+	                <img image-tags id="outfit-{{item.id_outfit}}" class="outfit-image taggd" ng-src="{{ item.image_url }}" alt="{{item.celebrity}}" tags="{{item.tags}}"/>
+	              </div>
+
+	              <div class="outfit-details-wrapper even">
+	                <div class="outfit-details-thumb-wrapper even">
+	                  <div class="outfit-details-thumb-frame">
+	                    <img class="outfit-details-thumb" ng-src="{{item.thumbnail_url}}" ng-click="goToCelebrity(item.celebrity)"/>
+	                  </div>
+	                  <img class="outfit-details-thumb-shadow" src="img/postusershadow2.png" />
+	                </div>
+	                <div class="outfit-details-info-wrapper">
+	                  <span class="outfit-details-info-celebrity">{{item.celebrity}}</span>
+	                  <div>
+	                    <img class="outfit-details-info-clock" src="img/time.png"/>
+	                    <span class="outfit-details-info-age">{{getTime(item.date)}}</span>
+	                  </div>
+	                  <p class="outfit-details-info-description">{{item.description}}</p>
+	                </div>
+	                <div class="outfit-details-info-actions">
+	                  <div class="outfit-details-info-action tags even active" ng-click="toggleTags($event)"></div>
+	                   <div class="outfit-details-info-action share even" ></div>
+	                   <div class="outfit-details-info-action favorite even" ng-if="!user.userId" ng-click="openLogin()"></div>
+	                   <div class="outfit-details-info-action favorite even" ng-if="user.userId" ng-click="addToFavourites(item.id_outfit)"></div>
+	                   <div class="outfit-details-info-action number even"><span id="fav_{{item.id_outfit}}">{{item.favourites}}</span></div>
+	                </div>
+	              </div>
+
+	            </div>
+
+	            <!-- ############################################################################## -->
+
+	            <div ng-if="platform == 'browser' && $odd" style="display: table; width: 100%;">
+
+	              <div class="outfit-details-wrapper odd">
+	                <div class="outfit-details-thumb-wrapper odd">
+	                  <div class="outfit-details-thumb-frame">
+	                    <img class="outfit-details-thumb" ng-src="{{item.thumbnail_url}}" ng-click="goToCelebrity(item.celebrity)"/>
+	                  </div>
+	                  <img class="outfit-details-thumb-shadow" src="img/postusershadow.png" />
+	                </div>
+	                <div class="outfit-details-info-wrapper">
+	                  <span class="outfit-details-info-celebrity">{{item.celebrity}}</span>
+	                  <div>
+	                    <img class="outfit-details-info-clock" src="img/time.png"/>
+	                    <span class="outfit-details-info-age">{{getTime(item.date)}}</span>
+	                  </div>
+	                  <p class="outfit-details-info-description">{{item.description}}</p>
+	                </div>
+	                <div class="outfit-details-info-actions">
+	                  <div class="outfit-details-info-action number odd">
+	                    <span id="fav_{{item.id_outfit}}">{{item.favourites}}</span>
+	                  </div>
+	                  <div class="outfit-details-info-action favorite odd" ng-if="!user.userId" ng-click="openLogin()"></div>
+	                  <div class="outfit-details-info-action favorite odd" ng-if="user.userId" ng-click="addToFavourites(item.id_outfit)"></div>
+	                  <div class="outfit-details-info-action share odd" ></div>
+	                  <div class="outfit-details-info-action tags odd active" ng-click="toggleTags($event)"></div>
+	                </div>
+	              </div>
+
+	              <div class="outfit-image-wrapper">
+	                <img image-tags id="outfit-{{item.id_outfit}}" class="outfit-image taggd" ng-src="{{ item.image_url }}" alt="{{item.celebrity}}" tags="{{item.tags}}"/>
+	              </div>
+	            </div>
+
+	            <!-- ############################################################################## -->
+
+	            <div ng-if="platform == 'webview'" class="outfit">
+
+	              <div class="outfit-image-wrapper">
+	                <img image-tags id="outfit-{{item.id_outfit}}" class="outfit-image taggd" ng-src="{{ item.image_url }}" alt="{{item.celebrity}}" tags="{{item.tags}}" />
+	              </div>
+
+	              <div class="outfit-details-wrapper even">
+	                <div class="outfit-details-thumb-wrapper even">
+	                  <div class="outfit-details-thumb-frame">
+	                    <img class="outfit-details-thumb" ng-src="{{item.thumbnail_url}}" ng-click="goToCelebrity(item.celebrity)"/>
+	                  </div>
+	                  <img class="outfit-details-thumb-shadow" src="img/postusershadow2.png" />
+	                </div>
+	                <div class="outfit-details-info-wrapper">
+	                  <span class="outfit-details-info-celebrity">{{item.celebrity}}</span>
+	                  <div>
+	                    <img class="outfit-details-info-clock" src="img/time.png"/>
+	                    <span class="outfit-details-info-age">{{getTime(item.date)}}</span>
+	                  </div>
+	                  <p class="outfit-details-info-description">{{item.description}}</p>
+	                </div>
+	                <div class="outfit-details-info-actions">
+	                  <div class="outfit-details-info-action tags even" ng-click="toggleTags($event)"></div>
+	                  <div class="outfit-details-info-action share even" ></div>
+	                  <div class="outfit-details-info-action favorite even" ng-if="!user.userId" ng-click="openLogin()"></div>
+	                  <div class="outfit-details-info-action favorite even" ng-if="user.userid" ng-click="addToFavourites(item.id_outfit)"></div>
+	                  <div class="outfit-details-info-action number even"><span id="fav_{{item.id_outfit}}">{{item.favourites}}</span></div>
+	                </div>
+	              </div>
+
+	            </div>
+
+	        </div>
+	        <!-- Conpensates Admin bar height -->
+        	<div ng-if="user && user.username=='admin'" class="admin-counter-height"></div>
+	    </div>
+	</div>
+  </ion-content>
+</ion-view>
